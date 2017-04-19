@@ -66,7 +66,7 @@
 
 		if ($events->num_rows > 0) {
 		  $events_arr = [];
-		  while($event = $categorie->fetch_assoc()){
+		  while($event = $events->fetch_assoc()){
 			array_push($events_arr, $event);
 		  }
 		  foreach ($events_arr as $event){
