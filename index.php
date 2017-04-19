@@ -22,14 +22,18 @@
       <div class="row center">
         <h5 class="header col s12 light">Cerca qui i tuoi Party preferiti.</h5>
       </div>
-      <div class="nav-wrapper grey lighten-2 z-depth-3">
-        <form>
+      <div class="row">
+        <div class="col s12 lighten-2 z-depth-3">
           <div class="input-field">
-            <input id="search" type="search" required>
+            <input placeholder="Cerca per Nome" id="place-input" type="search" required>
             <label class="label-icon" for="search"><i class="material-icons">search</i></label>
           </div>
-        </form>
+        </div>
+        
       </div>
+      
+      
+
       <br><br>
 
     </div>
@@ -40,6 +44,41 @@
     <div class="section">
 
       <div class="row">
+        <?php
+      $servername = "db678459989.db.1and1.com";
+      $username = "dbo678459989";
+      $password = "partydiatena";
+      $dbname = "db678459989";
+
+      // Create connection
+      
+
+      //Ristorante
+      if ($_GET["lat"] != ""){
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        
+        $sql_events = "SELECT Event.place, Event.desc, Event.contacts, Event.date, ACOS( SIN(".$lat.") * SIN(Event.lat) + COS(".$lat.") * COS(Event.lat) * COS(Event.lng – ".$lgn.") ) * 6371 AS dist FROM Event WHERE dist <= 100 ORDER BY Event.date;";
+        $events = $conn->query($sql_categorie);
+
+        if ($events->num_rows > 0) {
+            $events_arr = [];
+            while($event = $categorie->fetch_assoc()){
+              array_push($events_arr, $event);
+            }
+            foreach ($events_arr as $event){
+                echo "ciao";
+            }
+        } else {
+            echo "Nessun Event";
+        }
+      }
+      
+      $conn->close();
+    ?>
         <div class="col s12 m6">
           <div class="card">
             <div class="card-image">
@@ -70,7 +109,7 @@
                   width="100%"
                   height="100%"
                   frameborder="0" style="border:0"
-                  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAQscuzt3KREb1WYzGHAP1kE2eZCFHd5sk
+                  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCz6unKw3w7D8cKUN5Fa_7EY0qIBg4Vx8M 
                     &q=PlanetRoma" allowfullscreen>
                 </iframe>
               </div>
@@ -127,6 +166,10 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCz6unKw3w7D8cKUN5Fa_7EY0qIBg4Vx8M&libraries=places&callback=initAutocomplete"
+         async defer></script>
 
   </body>
 </html>
+
+
