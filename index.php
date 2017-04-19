@@ -25,7 +25,11 @@
 	  <div class="row">
 		<div class="col s12 lighten-2 z-depth-3">
 		  <div class="input-field">
-			<input placeholder="Cerca per Nome" id="place-input" type="search" required>
+		  <?php 
+
+		  	echo '<input placeholder="Cerca per Nome" id="place-input" type="search" value="'.$_GET["name"].'" required>';
+		   ?>
+			
 			<label class="label-icon" for="search"><i class="material-icons">search</i></label>
 		  </div>
 		</div>
@@ -102,7 +106,7 @@
 				</iframe>
 			  </div>
 			  <div id="event-'.$id.'-contacts">
-				<p>'.$event["desc"].'
+				<p>'.$event["contacts"].'
 				</p>
 			  </div>
 			</div>
