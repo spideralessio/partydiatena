@@ -32,7 +32,7 @@
 			  		<div class="input-field">
 			  			<?php 
 
-							echo '<input placeholder="Cerca per Nome" id="place-input" type="search" value="'.$_GET["name"].'" required>';
+							echo '<input placeholder="Dove ti trovi?" id="place-input" type="search" value="'.$_GET["name"].'" required>';
 			   			?>
 				
 						<label class="label-icon" for="search"><i class="material-icons">search</i></label>
