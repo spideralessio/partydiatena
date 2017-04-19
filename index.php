@@ -60,7 +60,7 @@
 		}
 		$lat = $_GET["lat"];
 		$lng = $_GET["lng"];
-		$sql_events = "SELECT Event.place, Event.desc, Event.contacts, Event.date, ACOS( SIN(".$lat.") * SIN(Event.lat) + COS(".$lat.") * COS(Event.lat) * COS(Event.lng – ".$lng.") ) * 6371 AS dist FROM Event WHERE dist <= 100 ORDER BY Event.date;";
+		$sql_events = "SELECT Event.place, Event.desc, Event.contacts, Event.date, ACOS(SIN(".$lat.")*SIN(Event.lat)+COS(".$lat.")*COS(Event.lat)*COS(Event.lng-".$lng."))*6371 AS dist FROM Event HAVING dist <= 100 ORDER BY Event.date;";
 		echo $sql_events;
 		$events = $conn->query($sql_categorie);
 
