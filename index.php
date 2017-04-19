@@ -63,10 +63,10 @@
 		$lat = $_GET["lat"];
 		$lng = $_GET["lng"];
 		$sql_events = "SELECT *, (((acos(sin((".$lat."*pi()/180))*sin((Event.lat*pi()/180))+cos((".$lat."*pi()/180))*cos((Event.lat*pi()/180))*cos(((".$lng."-Event.lng)*pi()/180))))*180/pi())*60*1.1515*1.609344) AS dist FROM Event HAVING dist <= 100 AND Event.date >= CURDATE() ORDER BY Event.date;";
-		echo $sql_events;
-		echo "<br><br>";
+		//echo $sql_events;
+		//echo "<br><br>";
 		$events = $conn->query($sql_events);
-		echo $events->num_rows;
+		//echo $events->num_rows;
 		if ($events->num_rows > 0) {
 		  $events_arr = [];
 		  while($event = $events->fetch_assoc()){
@@ -75,7 +75,7 @@
 		  foreach ($events_arr as $event){
 			 echo '<div class="card">
 			<div class="card-image">
-			  <img src="'.$event["image_url"].'">
+			  <img src="'.$event["img_url"].'">
 			  
 			  <a class="btn-floating halfway-fab waves-effect waves-light grey"><i class="material-icons">share</i></a>
 			</div>
@@ -89,12 +89,7 @@
 			</div>
 			<div class="card-content grey lighten-4 ">
 			  <div id="event-'.$id.'-desc">
-				<p>Lunedì 24 Aprile 2017 
-				  #AmericanCollegeParty #PartyDiAtena
-				  #LoveAndFriends presentano: <br>• festa in stile americano <br>• fatta da universitari per universitari!<br>•
-				  Presso il @PlanetRoma (via del commercio 36) <br>
-				  5 euro donna con bracciale<br>
-				  8 euro uomo con bracciale<br>
+				<p>'.$event["desc"].'
 				</p>
 			  </div>
 			  <div id="event-'.$id.'-place">
@@ -103,15 +98,11 @@
 				  height="100%"
 				  frameborder="0" style="border:0"
 				  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCz6unKw3w7D8cKUN5Fa_7EY0qIBg4Vx8M 
-					&q=PlanetRoma" allowfullscreen>
+					&q='.$event["place"].'" allowfullscreen>
 				</iframe>
 			  </div>
 			  <div id="event-'.$id.'-contacts">
-				<p>
-				  Per aggiungersi alla lista #PARTYDIATENA basta scrivere il proprio nome più i partecipanti del gruppo (esempio Mario +2)
-				  <br>#IlTuoFuoricorsoPreferito 
-				  <br><br>Info e prenotazione tavoli:<br>
-				  Voice Dom 340 1071906
+				<p>'.$event["desc"].'
 				</p>
 			  </div>
 			</div>
