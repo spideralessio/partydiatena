@@ -59,8 +59,8 @@
 			die("Connection failed: " . $conn->connect_error);
 		}
 		$lat = $_GET["lat"];
-		$lgn = $_GET["lgn"];
-		$sql_events = "SELECT Event.place, Event.desc, Event.contacts, Event.date, ACOS( SIN(".$lat.") * SIN(Event.lat) + COS(".$lat.") * COS(Event.lat) * COS(Event.lng – ".$lgn.") ) * 6371 AS dist FROM Event WHERE dist <= 100 ORDER BY Event.date;";
+		$lng = $_GET["lng"];
+		$sql_events = "SELECT Event.place, Event.desc, Event.contacts, Event.date, ACOS( SIN(".$lat.") * SIN(Event.lat) + COS(".$lat.") * COS(Event.lat) * COS(Event.lng – ".$lng.") ) * 6371 AS dist FROM Event WHERE dist <= 100 ORDER BY Event.date;";
 		echo $sql_events;
 		$events = $conn->query($sql_categorie);
 
