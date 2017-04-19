@@ -44,6 +44,8 @@
 	<div class="section">
 
 	  <div class="row">
+		
+		<div class="col s12 m6">
 		<?php
 	  $servername = "db678459989.db.1and1.com";
 	  $username = "dbo678459989";
@@ -60,7 +62,7 @@
 		}
 		$lat = $_GET["lat"];
 		$lng = $_GET["lng"];
-		$sql_events = "SELECT Event.place, Event.desc, Event.contacts, Event.date, (((acos(sin((".$lat."*pi()/180))*sin((Event.lat*pi()/180))+cos((".$lat."*pi()/180))*cos((Event.lat*pi()/180))*cos(((".$lng."-Event.lng)*pi()/180))))*180/pi())*60*1.1515*1.609344) AS dist FROM Event HAVING dist <= 100 ORDER BY Event.date;";
+		$sql_events = "SELECT *, (((acos(sin((".$lat."*pi()/180))*sin((Event.lat*pi()/180))+cos((".$lat."*pi()/180))*cos((Event.lat*pi()/180))*cos(((".$lng."-Event.lng)*pi()/180))))*180/pi())*60*1.1515*1.609344) AS dist FROM Event HAVING dist <= 100 WHERE Event.date >= CURDATE() ORDER BY Event.date;";
 		echo $sql_events;
 		echo "<br><br>";
 		$events = $conn->query($sql_events);
@@ -71,34 +73,22 @@
 			array_push($events_arr, $event);
 		  }
 		  foreach ($events_arr as $event){
-			  echo "ciao";
-		  }
-		  
-		} else {
-			echo "Nessun Evento";
-		}
-		$conn->close();
-	  }
-	  
-	  
-	?>
-		<div class="col s12 m6">
-		  <div class="card">
+			 echo '<div class="card">
 			<div class="card-image">
-			  <img src="https://scontent-mxp1-1.xx.fbcdn.net/v/t31.0-8/18056357_10211762225798839_457570341278212958_o.jpg?oh=7840fe680f742290742f9dd30759e808&oe=59896187">
+			  <img src="'.$event["image_url"].'">
 			  
 			  <a class="btn-floating halfway-fab waves-effect waves-light grey"><i class="material-icons">share</i></a>
 			</div>
 			
 			<div class="card-tabs">
 			  <ul class="tabs tabs-fixed-width">
-				<li class="tab"><a class="active" href="#test4">Descrizione</a></li>
-				<li class="tab"><a href="#test5">Luogo</a></li>
-				<li class="tab"><a href="#test6">Contatti</a></li>
+				<li class="tab"><a class="active" href="#event-'.$id.'-desc">Descrizione</a></li>
+				<li class="tab"><a href="#event-'.$id.'-place">Luogo</a></li>
+				<li class="tab"><a href="#event-'.$id.'-contacts">Contatti</a></li>
 			  </ul>
 			</div>
 			<div class="card-content grey lighten-4 ">
-			  <div id="test4">
+			  <div id="event-'.$id.'-desc">
 				<p>Lunedì 24 Aprile 2017 
 				  #AmericanCollegeParty #PartyDiAtena
 				  #LoveAndFriends presentano: <br>• festa in stile americano <br>• fatta da universitari per universitari!<br>•
@@ -107,7 +97,7 @@
 				  8 euro uomo con bracciale<br>
 				</p>
 			  </div>
-			  <div id="test5">
+			  <div id="event-'.$id.'-place">
 				<iframe class="z-depth-3" 
 				  width="100%"
 				  height="100%"
@@ -116,7 +106,7 @@
 					&q=PlanetRoma" allowfullscreen>
 				</iframe>
 			  </div>
-			  <div id="test6">
+			  <div id="event-'.$id.'-contacts">
 				<p>
 				  Per aggiungersi alla lista #PARTYDIATENA basta scrivere il proprio nome più i partecipanti del gruppo (esempio Mario +2)
 				  <br>#IlTuoFuoricorsoPreferito 
@@ -126,7 +116,18 @@
 			  </div>
 			</div>
 		  </div>
-		</div>
+		</div>'
+		  }
+		  
+		} else {
+			echo "<h3>Nessun Evento</h3>";
+		}
+		$conn->close();
+	  }
+	  
+	  
+	?>
+		
 		
 	  </div>
 
