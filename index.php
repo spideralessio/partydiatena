@@ -72,12 +72,13 @@
             foreach ($events_arr as $event){
                 echo "ciao";
             }
+        $conn->close();
         } else {
             echo "Nessun Event";
         }
       }
       
-      $conn->close();
+      
     ?>
         <div class="col s12 m6">
           <div class="card">
