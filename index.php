@@ -11,126 +11,130 @@
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
-  	<nav class="grey darken-1" role="navigation">
-		<div class="nav-wrapper container">
-			<a id="logo-container" href="#" class="brand-logo">Party Di ATENA</a>
-		</div>
-  	</nav>
-  	<div class="section no-pad-bot" id="index-banner">
-		<div class="container">
-	  	<br><br>
-	  	<h1 class="header center black-text">Party di ATENA</h1>
-	  	<div class="row center">
-			<h5 class="header col s12 light">Cerca qui i tuoi Party preferiti.</h5>
-	  	</div>
-	  	<div class="row">
-			<div class="col s12 lighten-2 z-depth-3">
-		  		<div class="input-field">
-		  			<?php 
-
-						echo '<input placeholder="Cerca per Nome" id="place-input" type="search" value="'.$_GET["name"].'" required>';
-		   			?>
-			
-					<label class="label-icon" for="search"><i class="material-icons">search</i></label>
-		  		</div>
+	<header>
+		<nav class="grey darken-1" role="navigation">
+			<div class="nav-wrapper container">
+				<a id="logo-container" href="#" class="brand-logo">Party Di ATENA</a>
 			</div>
+	  	</nav>
 		
-	  	</div>
-	  
-	  
+	</header>
+  	<main>
+	  	<div class="section no-pad-bot" id="index-banner">
+			<div class="container">
+		  	<br><br>
+		  	<h1 class="header center black-text">Party di ATENA</h1>
+		  	<div class="row center">
+				<h5 class="header col s12 light">Cerca qui i tuoi Party preferiti.</h5>
+		  	</div>
+		  	<div class="row">
+				<div class="col s12 lighten-2 z-depth-3">
+			  		<div class="input-field">
+			  			<?php 
 
-	  	<br><br>
-
-	</div>
-  	</div>
-
-
-	<div class="container">
-		<div class="section">
-
-			<div class="row">
+							echo '<input placeholder="Cerca per Nome" id="place-input" type="search" value="'.$_GET["name"].'" required>';
+			   			?>
+				
+						<label class="label-icon" for="search"><i class="material-icons">search</i></label>
+			  		</div>
+				</div>
 			
-				<div class="col s12 m6">
-					<?php
-					  $servername = "db678459989.db.1and1.com";
-				 	 $username = "dbo678459989";
-				  	$password = "partydiatena";
-				  	$dbname = "db678459989";
+		  	</div>
+		  
+		  
 
-				  // Create connection
-				  
-				  if ($_GET["lat"]){
-					$conn = new mysqli($servername, $username, $password, $dbname);
-					// Check connection
-					if ($conn->connect_error) {
-						die("Connection failed: " . $conn->connect_error);
-					}
-					$lat = $_GET["lat"];
-					$lng = $_GET["lng"];
-					$sql_events = "SELECT *, (((acos(sin((".$lat."*pi()/180))*sin((Event.lat*pi()/180))+cos((".$lat."*pi()/180))*cos((Event.lat*pi()/180))*cos(((".$lng."-Event.lng)*pi()/180))))*180/pi())*60*1.1515*1.609344) AS dist FROM Event HAVING dist <= 100 AND Event.date >= CURDATE() ORDER BY Event.date;";
-					//echo $sql_events;
-					//echo "<br><br>";
-					$events = $conn->query($sql_events);
-					//echo $events->num_rows;
-					if ($events->num_rows > 0) {
-					  $events_arr = [];
-					  while($event = $events->fetch_assoc()){
-						array_push($events_arr, $event);
-					  }
-					  foreach ($events_arr as $event){
-						echo '
-						<div class="card">
-							<div class="card-image">
-								<img src="'.$event["img_url"].'">
-								<a class="btn-floating halfway-fab waves-effect waves-light grey"><i class="material-icons">share</i></a>
-							</div>
-							
-							<div class="card-tabs">
-								<ul class="tabs tabs-fixed-width">
-									<li class="tab"><a class="active" href="#event-'.$id.'-desc">Descrizione</a></li>
-									<li class="tab"><a href="#event-'.$id.'-place">Luogo</a></li>
-									<li class="tab"><a href="#event-'.$id.'-contacts">Contatti</a></li>
-								</ul>
-							</div>
-							<div class="card-content grey lighten-4 ">
-								<div id="event-'.$id.'-desc">
-									<p>'.$event["desc"].'
-									</p>
+		  	<br><br>
+
+		</div>
+	  	</div>
+
+
+		<div class="container">
+			<div class="section">
+
+				<div class="row">
+				
+					<div class="col s12 m6">
+						<?php
+						  $servername = "db678459989.db.1and1.com";
+					 	 $username = "dbo678459989";
+					  	$password = "partydiatena";
+					  	$dbname = "db678459989";
+
+					  // Create connection
+					  
+					  if ($_GET["lat"]){
+						$conn = new mysqli($servername, $username, $password, $dbname);
+						// Check connection
+						if ($conn->connect_error) {
+							die("Connection failed: " . $conn->connect_error);
+						}
+						$lat = $_GET["lat"];
+						$lng = $_GET["lng"];
+						$sql_events = "SELECT *, (((acos(sin((".$lat."*pi()/180))*sin((Event.lat*pi()/180))+cos((".$lat."*pi()/180))*cos((Event.lat*pi()/180))*cos(((".$lng."-Event.lng)*pi()/180))))*180/pi())*60*1.1515*1.609344) AS dist FROM Event HAVING dist <= 100 AND Event.date >= CURDATE() ORDER BY Event.date;";
+						//echo $sql_events;
+						//echo "<br><br>";
+						$events = $conn->query($sql_events);
+						//echo $events->num_rows;
+						if ($events->num_rows > 0) {
+						  $events_arr = [];
+						  while($event = $events->fetch_assoc()){
+							array_push($events_arr, $event);
+						  }
+						  foreach ($events_arr as $event){
+							echo '
+							<div class="card">
+								<div class="card-image">
+									<img src="'.$event["img_url"].'">
+									<a class="btn-floating halfway-fab waves-effect waves-light grey"><i class="material-icons">share</i></a>
 								</div>
-								<div id="event-'.$id.'-place">
-									<iframe class="z-depth-3" 
-									width="100%"
-									height="100%"
-									frameborder="0" style="border:0"
-									src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCz6unKw3w7D8cKUN5Fa_7EY0qIBg4Vx8M 
-									&q='.$event["place"].'" allowfullscreen>
-									</iframe>
+								
+								<div class="card-tabs">
+									<ul class="tabs tabs-fixed-width">
+										<li class="tab"><a class="active" href="#event-'.$id.'-desc">Descrizione</a></li>
+										<li class="tab"><a href="#event-'.$id.'-place">Luogo</a></li>
+										<li class="tab"><a href="#event-'.$id.'-contacts">Contatti</a></li>
+									</ul>
 								</div>
-								<div id="event-'.$id.'-contacts">
-									<p>'.$event["contacts"].'
-									</p>
+								<div class="card-content grey lighten-4 ">
+									<div id="event-'.$id.'-desc">
+										<p>'.$event["desc"].'
+										</p>
+									</div>
+									<div id="event-'.$id.'-place">
+										<iframe class="z-depth-3" 
+										width="100%"
+										height="100%"
+										frameborder="0" style="border:0"
+										src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCz6unKw3w7D8cKUN5Fa_7EY0qIBg4Vx8M 
+										&q='.$event["place"].'" allowfullscreen>
+										</iframe>
+									</div>
+									<div id="event-'.$id.'-contacts">
+										<p>'.$event["contacts"].'
+										</p>
+									</div>
 								</div>
-							</div>
-						</div>';
+							</div>';
+						  }
+						  
+						} else {
+							echo "<h3>Nessun Evento</h3>";
+						}
+						$conn->close();
 					  }
 					  
-					} else {
-						echo "<h3>Nessun Evento</h3>";
-					}
-					$conn->close();
-				  }
-				  
-				  
-					?>
-			
-			
+					  
+						?>
+				
+				
+						</div>
+
+
 					</div>
-
-
 				</div>
 			</div>
-		</div>
-
+		</main>
 		<footer class="page-footer grey darken-1">
 			<div class="container">
 				<div class="row">
