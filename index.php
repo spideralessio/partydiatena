@@ -74,7 +74,7 @@
 						if ($_GET["lat"]){
 							$sql_events = "SELECT *, (((acos(sin((".$lat."*pi()/180))*sin((Event.lat*pi()/180))+cos((".$lat."*pi()/180))*cos((Event.lat*pi()/180))*cos(((".$lng."-Event.lng)*pi()/180))))*180/pi())*60*1.1515*1.609344) AS dist FROM Event HAVING dist <= 100 AND Event.date >= CURDATE() ORDER BY Event.date;";
 						}else{
-							echo "<h4>Prossimi Eventi:</h4>";
+							
 							$sql_events = "SELECT * FROM Event ORDER BY Event.date;";
 						}
 						//echo $sql_events;
@@ -87,6 +87,7 @@
 							array_push($events_arr, $event);
 						  }
 						  foreach ($events_arr as $event){
+						  	echo "<h4>Prossimi Eventi:</h4>";
 							echo '
 							<div class="card">
 								<div class="card-image">
