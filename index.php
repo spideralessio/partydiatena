@@ -63,7 +63,7 @@
 
 					  // Create connection
 					  
-					  if ($_GET["lat"]){
+					  
 						$conn = new mysqli($servername, $username, $password, $dbname);
 						// Check connection
 						if ($conn->connect_error) {
@@ -71,7 +71,12 @@
 						}
 						$lat = $_GET["lat"];
 						$lng = $_GET["lng"];
-						$sql_events = "SELECT *, (((acos(sin((".$lat."*pi()/180))*sin((Event.lat*pi()/180))+cos((".$lat."*pi()/180))*cos((Event.lat*pi()/180))*cos(((".$lng."-Event.lng)*pi()/180))))*180/pi())*60*1.1515*1.609344) AS dist FROM Event HAVING dist <= 100 AND Event.date >= CURDATE() ORDER BY Event.date;";
+						if ($_GET["lat"]){
+							$sql_events = "SELECT *, (((acos(sin((".$lat."*pi()/180))*sin((Event.lat*pi()/180))+cos((".$lat."*pi()/180))*cos((Event.lat*pi()/180))*cos(((".$lng."-Event.lng)*pi()/180))))*180/pi())*60*1.1515*1.609344) AS dist FROM Event HAVING dist <= 100 AND Event.date >= CURDATE() ORDER BY Event.date;";
+						}else{
+							echo "<h4>Prossimi Eventi:</h4>";
+							$sql_events = "SELECT * FROM Event ORDER BY Event.date;";
+						}
 						//echo $sql_events;
 						//echo "<br><br>";
 						$events = $conn->query($sql_events);
@@ -119,10 +124,9 @@
 						  }
 						  
 						} else {
-							echo "<h3>Nessun Evento</h3>";
+							echo "<h4>Nessun Evento Trovato</h4>";
 						}
 						$conn->close();
-					  }
 					  
 					  
 						?>
